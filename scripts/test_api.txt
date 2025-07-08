@@ -1,0 +1,53 @@
+POST /api/v1/posts/                   # Create post
+PUT  /api/v1/posts/{slug}/            # Update own post
+DELETE /api/v1/posts/{slug}/          # Delete own post
+GET  /api/v1/my-posts/                # List own posts
+POST /api/v1/posts/{slug}/comments/   # Create comment
+POST /api/v1/posts/{slug}/like/       # Like/unlike post
+GET  /api/v1/my-activity/             # User activity history
+
+
+# 1. Register & Login
+curl -X POST http://localhost:8000/api/auth/register/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "author@example.com",
+    "username": "author",
+    "first_name": "John",
+    "last_name": "Author",
+    "password": "securepass123",
+    "password_confirm": "securepass123"
+  }'
+
+# 2. Create a post (use access token from registration)
+curl -X POST http://localhost:8000/api/v1/posts/ \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTVkMmIwNjQtNzIxZS00NjMwLThkMTEtN2U0NjYyMzFjNjRjIiwiZW1haWwiOiJhdXRob3JAZXhhbXBsZS5jb20iLCJ1c2VybmFtZSI6ImF1dGhvciIsInRva2VuX3R5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTE5OTY4MDgsImV4cCI6MTc1MjAwMDQwOCwianRpIjoiMzYwODlhZDctY2NmNy00ODU3LWI0OTEtOTllNWRkY2I1YWU0In0.eFV9i5_UL3jzMB_s-Y3zzP_rYbzbNrUCXoJ6kSeWCUg" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "My First Post",
+    "slug": "my-first-post",
+    "content": "This is the content of my first post.",
+    "status": "published",
+    "tags": ["django", "mongodb", "api"]
+    "excerpt": "",
+    "featured_image": "",
+    "meta_description": ""
+  }'
+
+# 3. List all posts
+curl -X GET http://localhost:8000/api/v1/posts/
+
+# 4. Get post details
+curl -X GET http://localhost:8000/api/v1/posts/my-first-post/
+
+# 5. Like the post
+curl -X POST http://localhost:8000/api/v1/posts/my-first-post/like/ \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTVkMmIwNjQtNzIxZS00NjMwLThkMTEtN2U0NjYyMzFjNjRjIiwiZW1haWwiOiJhdXRob3JAZXhhbXBsZS5jb20iLCJ1c2VybmFtZSI6ImF1dGhvciIsInRva2VuX3R5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTE5OTY4MDgsImV4cCI6MTc1MjAwMDQwOCwianRpIjoiMzYwODlhZDctY2NmNy00ODU3LWI0OTEtOTllNWRkY2I1YWU0In0.eFV9i5_UL3jzMB_s-Y3zzP_rYbzbNrUCXoJ6kSeWCUg"
+
+# 6. Add a comment
+curl -X POST http://localhost:8000/api/v1/posts/my-first-post/comments/ \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTVkMmIwNjQtNzIxZS00NjMwLThkMTEtN2U0NjYyMzFjNjRjIiwiZW1haWwiOiJhdXRob3JAZXhhbXBsZS5jb20iLCJ1c2VybmFtZSI6ImF1dGhvciIsInRva2VuX3R5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTE5OTY4MDgsImV4cCI6MTc1MjAwMDQwOCwianRpIjoiMzYwODlhZDctY2NmNy00ODU3LWI0OTEtOTllNWRkY2I1YWU0In0.eFV9i5_UL3jzMB_s-Y3zzP_rYbzbNrUCXoJ6kSeWCUg" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content": "Great post! Very helpful."
+  }'

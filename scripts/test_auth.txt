@@ -1,0 +1,26 @@
+# 1. Test Registration
+curl -X POST http://localhost:8000/api/auth/register/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "john@example.com",
+    "username": "john_doe",
+    "first_name": "John",
+    "last_name": "Doe",
+    "password": "securepassword123",
+    "password_confirm": "securepassword123"
+  }'
+
+# 2. Test Login
+curl -X POST http://localhost:8000/api/auth/login/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "john@example.com",
+    "password": "securepassword123"
+  }'
+
+# 3. Test Profile (replace TOKEN with access token from login)
+curl -X GET http://localhost:8000/api/auth/profile/ \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYmVlYTBjY2YtOWZkOC00ODg5LTk4YmUtMjJhNmJiYzE4MTMwIiwiZW1haWwiOiJqb2huQGV4YW1wbGUuY29tIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInRva2VuX3R5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTE5OTYwMjUsImV4cCI6MTc1MTk5OTYyNSwianRpIjoiYjM2ZDRkMGYtOTJmYS00ZjNhLTgyYzEtMjFjMGU1NWY0NDFkIn0._AXfAZClx3DOcZKDd2r-7TsPgI32wNk2otYNU5R-4JY"
+
+# 4. Test Auth Status
+curl -X GET http://localhost:8000/api/auth/status/
