@@ -62,7 +62,7 @@ WSGI_APPLICATION = "myproject.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "admin.sqlite3",  # Separate DB for admin
+        "NAME": BASE_DIR / "admin.sqlite3",  # Keep admin DB separate
     }
 }
 

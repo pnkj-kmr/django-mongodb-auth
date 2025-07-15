@@ -90,6 +90,11 @@ class UserLoginSerializer(serializers.Serializer):
             )
 
         # Check user exists and is active
+        # TODO - need to add redis cache
+        # which will save login sessions
+        # and validate the Bearer token
+        # session tokens will be expired as per given time
+
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:

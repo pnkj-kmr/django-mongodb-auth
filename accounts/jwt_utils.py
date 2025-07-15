@@ -75,8 +75,10 @@ class JWTUtils:
                 "username": user.username,
                 "is_active": user.is_active,
             },
-            timeout=3600,
-        )  # 1 hour
+            timeout=int(
+                settings.JWT_SETTINGS["REFRESH_TOKEN_LIFETIME"].total_seconds()
+            ),
+        )
 
         return {
             "access": access_token,
